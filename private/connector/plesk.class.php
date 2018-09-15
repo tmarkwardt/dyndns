@@ -31,7 +31,7 @@ class plesk {
             $this->_database = @new \mysqli(dyndns\config::mysqlServer, dyndns\config::mysqlUsername, dyndns\config::mysqlPassword, dyndns\config::mysqlDatabase, dyndns\config::mysqlPort);
    
             if ($this->_database->connect_error) {
-                status::sendErrorMessage('Error: Database Connection Error', true, 500);
+                dyndns\status::sendErrorMessage('Error: Database Connection Error', true, 500);
             }
         }
         return $this->_database;
