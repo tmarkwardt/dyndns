@@ -3,7 +3,7 @@
  * @author Tim Weyand <https://www.weyand.biz>
  * @copyright 2017 - Tim Weyand
  * @license https://opensource.org/licenses/MIT MIT License
- * @version 1.0
+ * @version 1.0.1
  */
 namespace website\weyand\dyndns;
 
@@ -24,6 +24,30 @@ class filter {
            $destination=null;
        }
          
+       if( $destination !== null) {
+           if( !file_exists( config::allowedDomainsFile)) {
+               status::sendErrorMessage( 'Error: Service forbidden', true, 403);
+           }
+           $domainsdata = file_get_contents( config::allowedDomainsFile);
+           if( strlen(trim( $domaindata)) == 0) {
+               $domainsdata = array();
+           }
+           else {
+               $domainsdata = explode( "\n", $domainsdata);
+           }
+           $found = false;
+           foreach( $domainsdata as $entry) {
+               if( strlen( trim( $entry)) > 0) {
+                   $entry = '/^'.str_replace( '*', ".*", str_replace( '.', "\\.", trim( $entry))).'$/';
+                   if( preg_match( $entry, $destination)) $found = true;
+               }
+           }
+           if( !$found) {
+               $destination = null;
+               status::sendErrorMessage( "Error: Domain don't allowed to change", true, 403);
+           }
+       } 
+        
        if ($fail_on_error===true && $destination===null) {
            status::sendErrorMessage('Error: Domainname invalid', true, 400);
        }
