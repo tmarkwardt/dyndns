@@ -30,6 +30,9 @@ class config {
     //possible values [false,'basic','db']
     const authentication = 'basic';
     
+     //allowed domains file
+    const allowedDomainsFile = __DIR__.'/data/dyndns.domains';
+    
     //Basic Authentication
     const basic_auth_username = 'dynuser';
     
