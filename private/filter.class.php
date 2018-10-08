@@ -3,7 +3,7 @@
  * @author Tim Weyand <https://www.weyand.biz>
  * @copyright 2017 - Tim Weyand
  * @license https://opensource.org/licenses/MIT MIT License
- * @version 1.0.1
+ * @version 1.0.2
  */
 namespace website\weyand\dyndns;
 
@@ -29,7 +29,7 @@ class filter {
                status::sendErrorMessage( 'Error: Service forbidden', true, 403);
            }
            $domainsdata = file_get_contents( config::allowedDomainsFile);
-           if( strlen(trim( $domaindata)) == 0) {
+           if( strlen(trim( $domainsdata)) == 0) {
                $domainsdata = array();
            }
            else {
